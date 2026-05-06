@@ -12,17 +12,13 @@ Maahishmati is Sriram's Codex-native war court for shipping products. The surfac
 If the user says only `bahubali` or `maahishmati`, render the court and ask for the mission:
 
 ```text
-╔════════════════════════════════════════════════════════════╗
-║                       MAAHISHMATI                         ║
-║                         WAR COURT                         ║
-╚════════════════════════════════════════════════════════════╝
+ __  __    _    _    _   _ ___ ____  _   _ __  __    _  _____ ___
+|  \/  |  / \  | |  | | | |_ _/ ___|| | | |  \/  |  / \|_   _|_ _|
+| |\/| | / _ \ | |  | |_| || |\___ \| |_| | |\/| | / _ \ | |  | |
+| |  | |/ ___ \| |__|  _  || | ___) |  _  | |  | |/ ___ \| |  | |
+|_|  |_/_/   \_\____|_| |_|___|____/|_| |_|_|  |_/_/   \_\_| |___|
 
-                         [ SIVAGAMI ]
-                            .-^-.
-                           /|o o|\
-                             \_/
-                            /|#|\
-                           /_|_|_\
+                         WAR COURT
 
 [SIVAGAMI] The court is awake.
 [SIVAGAMI] What war shall we win today?
