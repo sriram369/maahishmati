@@ -3,12 +3,14 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
+import { fileURLToPath } from "node:url";
 
 const cwd = process.cwd();
 const root = path.join(cwd, ".maahishmati");
 const runsDir = path.join(root, "runs");
 const agentsPath = path.join(root, "agents.json");
 const latestPath = path.join(root, "latest.json");
+const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
 const AGENTS = [
   {
@@ -302,12 +304,34 @@ function doctor() {
   console.log("[SIVAGAMI] Court files are ready.");
 }
 
+function installSkill() {
+  const source = path.join(packageRoot, "skills", "maahishmati");
+  if (!fs.existsSync(source)) {
+    console.log("[SIVAGAMI] Bundled skill not found in this install.");
+    console.log(`[SIVAGAMI] Expected: ${source}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  const codexHome = process.env.CODEX_HOME || path.join(process.env.HOME || "", ".codex");
+  const target = path.join(codexHome, "skills", "maahishmati");
+  fs.mkdirSync(path.dirname(target), { recursive: true });
+  fs.rmSync(target, { recursive: true, force: true });
+  fs.cpSync(source, target, { recursive: true });
+  console.log("MAAHISHMATI SKILL INSTALL");
+  console.log(`Source: ${source}`);
+  console.log(`Target: ${target}`);
+  console.log("");
+  console.log("[SIVAGAMI] Codex skill installed. In a new Codex turn, say: bahubali");
+}
+
 function usage() {
   console.log(`Usage:
   bahubali                         summon the court interactively
   bahubali run "build calculator"  create a mission
   bahubali status                  show latest mission
   bahubali thinking                show armies, running agents, and tasks
+  bahubali install-skill           install Codex skill trigger
   bahubali agents                  list court agents
   bahubali doctor                  check local setup
 
@@ -337,6 +361,7 @@ async function main() {
     return printAgents();
   }
   if (cmd === "doctor") return doctor();
+  if (cmd === "install-skill") return installSkill();
   if (cmd === "help" || cmd === "--help" || cmd === "-h") return usage();
   return run([cmd, ...rest].join(" ").trim());
 }

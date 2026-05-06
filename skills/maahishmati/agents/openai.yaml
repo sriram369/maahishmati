@@ -1,0 +1,4 @@
+interface:
+  display_name: "Maahishmati"
+  short_description: "ASCII war court for Codex shipping."
+  default_prompt: "bahubali"

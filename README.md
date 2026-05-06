@@ -30,6 +30,18 @@ Then run:
 bahubali
 ```
 
+Install the Codex skill trigger:
+
+```bash
+bahubali install-skill
+```
+
+After that, start a new Codex turn and say:
+
+```text
+bahubali
+```
+
 Requirements:
 
 - Node.js 20+
@@ -95,3 +107,9 @@ bahubali
 ```
 
 That should summon the Maahishmati court. The current CLI is the first local runtime; the next step is a Codex skill/plugin wrapper that maps the same trigger to real subagent dispatch.
+
+The skill is bundled in this repo under `skills/maahishmati` and can be installed into `~/.codex/skills/maahishmati` with:
+
+```bash
+bahubali install-skill
+```

@@ -16,6 +16,7 @@ fi
 
 echo "Installing Maahishmati from github:${REPO}..."
 npm install -g "github:${REPO}"
+bahubali install-skill
 
 echo
 echo "Maahishmati installed."
