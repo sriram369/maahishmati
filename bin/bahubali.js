@@ -196,9 +196,104 @@ function makeRun(goal) {
         };
       }),
     })),
+    subagents: [],
     phases,
     next: "Wire phases to Codex subagents or local workers.",
   };
+}
+
+function buildDispatch(run) {
+  const dispatch = [
+    {
+      id: `${run.id}-mahendra`,
+      agent: "Mahendra",
+      army: "BUILD ARMY",
+      status: "queued",
+      context: "isolated",
+      task: `Map the battlefield for: ${run.goal}. Return app/repo type, relevant files, risks, and next steps. Read-only.`,
+    },
+    {
+      id: `${run.id}-devasena`,
+      agent: "Devasena",
+      army: "COMMAND ARMY",
+      status: "queued",
+      context: "isolated",
+      task: `Cut MVP scope for: ${run.goal}. Return must-haves, non-goals, and acceptance criteria.`,
+    },
+    {
+      id: `${run.id}-amarendra`,
+      agent: "Amarendra",
+      army: "BUILD ARMY",
+      status: "waiting",
+      context: "fork-after-scope",
+      task: `Implement the approved product increment for: ${run.goal}. Return changed files, summary, tests, and risks.`,
+    },
+    {
+      id: `${run.id}-avantika`,
+      agent: "Avantika",
+      army: "POLISH ARMY",
+      status: "waiting",
+      context: "fork-after-build",
+      task: `Polish UX and interaction for: ${run.goal}. Return UX changes, responsive notes, and visual risks.`,
+    },
+    {
+      id: `${run.id}-bhalla`,
+      agent: "Bhalla",
+      army: "PRESSURE ARMY",
+      status: "waiting",
+      context: "fork-after-build",
+      task: `Attack assumptions and edge cases for: ${run.goal}. Return likely failures and blockers. Read-only unless tests are requested.`,
+    },
+    {
+      id: `${run.id}-kattappa`,
+      agent: "Kattappa",
+      army: "PRESSURE ARMY",
+      status: "waiting",
+      context: "fork-after-build",
+      task: `Review and verify the implementation for: ${run.goal}. Return findings, checks run, ship blockers, and residual risk.`,
+    },
+  ];
+
+  const dispatchedAgents = new Map(dispatch.map((item) => [item.agent, item.status]));
+  const armies = run.armies.map((army) => {
+    const activeAgents = army.agents.map((agent) => ({
+      ...agent,
+      status: dispatchedAgents.get(agent.name) || agent.status,
+    }));
+    const isActive = activeAgents.some((agent) => ["queued", "running"].includes(agent.status));
+    const isWaiting = activeAgents.some((agent) => agent.status === "waiting");
+    return {
+      ...army,
+      status: isActive ? "active" : isWaiting ? "waiting" : army.status,
+      agents: activeAgents,
+    };
+  });
+
+  return {
+    ...run,
+    status: "dispatched",
+    thinking: {
+      ...run.thinking,
+      currentThought: "Armies dispatched. Explorer and Truth Keeper move first; builders wait for scoped terrain.",
+    },
+    armies,
+    subagents: dispatch,
+    next: "In Codex skill mode, spawn matching live subagents when explicit full-court authorization is present.",
+  };
+}
+
+function printDispatch(run) {
+  console.log("MAAHISHMATI DISPATCH");
+  console.log(`War:  ${run.id}`);
+  console.log(`Goal: ${run.goal}`);
+  console.log("");
+  for (const subagent of run.subagents || []) {
+    console.log(`[${subagent.agent.toUpperCase().padEnd(9)}] ${subagent.status.padEnd(7)} ${subagent.army}`);
+    console.log(`  context: ${subagent.context}`);
+    console.log(`  task: ${subagent.task}`);
+  }
+  console.log("");
+  printThinking(run);
 }
 
 function printCourt() {
@@ -289,6 +384,31 @@ async function run(goalFromArgs) {
   console.log(`[SIVAGAMI] War record saved: ${path.relative(cwd, file)}`);
 }
 
+async function dispatch(goalFromArgs) {
+  ensureInit();
+  let runState;
+  if (goalFromArgs) {
+    runState = makeRun(goalFromArgs);
+  } else {
+    const latest = loadLatest();
+    if (!latest) {
+      const goal = await promptForGoal();
+      if (!goal) {
+        console.log("[SIVAGAMI] No mission given. The armies will wait.");
+        return;
+      }
+      runState = makeRun(goal);
+    } else {
+      runState = JSON.parse(fs.readFileSync(latest.file, "utf8"));
+    }
+  }
+
+  const dispatched = buildDispatch(runState);
+  const file = saveRun(dispatched);
+  printDispatch(dispatched);
+  console.log(`[SIVAGAMI] Dispatch record saved: ${path.relative(cwd, file)}`);
+}
+
 function doctor() {
   ensureInit();
   console.log("MAAHISHMATI DOCTOR");
@@ -325,6 +445,7 @@ function usage() {
   console.log(`Usage:
   bahubali                         summon the court interactively
   bahubali run "build calculator"  create a mission
+  bahubali dispatch "build app"     create live-subagent dispatch plan
   bahubali status                  show latest mission
   bahubali thinking                show armies, running agents, and tasks
   bahubali install-skill           install Codex skill trigger
@@ -340,6 +461,7 @@ async function main() {
   const [cmd, ...rest] = process.argv.slice(2);
   if (!cmd) return run("");
   if (cmd === "run") return run(rest.join(" ").trim());
+  if (cmd === "dispatch") return dispatch(rest.join(" ").trim());
   if (cmd === "status") {
     const latest = loadLatest();
     if (!latest) return printStatus(null);

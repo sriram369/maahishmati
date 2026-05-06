@@ -128,6 +128,57 @@ Workers are not alone in the codebase. Tell them not to revert or overwrite othe
 
 Prefer parallelism only when tasks are independent. Keep immediate blocking work local.
 
+## Live Dispatch
+
+When live subagent tools are available and the user explicitly asks for full-court/parallel/subagent work, dispatch in waves:
+
+Wave 1, parallel:
+
+- Mahendra: read-only terrain map.
+- Devasena: MVP scope and acceptance criteria.
+
+Main thread while Wave 1 runs:
+
+- inspect immediate blockers locally;
+- prepare the concise mission plan;
+- do not duplicate delegated exploration/scope work.
+
+Wave 2, after scope/terrain:
+
+- Amarendra: implementation in explicitly owned files/modules.
+- Aslam: tooling/integration only if needed.
+- Avantika: UX polish only if there is a user-facing surface and her file ownership is disjoint from Amarendra, or after Amarendra returns.
+
+Wave 3, after build:
+
+- Bhalla: adversarial critique/read-only edge cases.
+- Kattappa: review and verification.
+
+Wait for subagents only when their result is needed for the next critical step. Otherwise continue useful local work. Close or ignore agents when their output is no longer needed.
+
+Use this exact dispatch prompt pattern:
+
+```text
+You are <AGENT>, the <TITLE> in Maahishmati.
+Mission: <mission>
+Ownership: <files/modules/responsibility>
+Contract: <specific output contract>
+You are not alone in the codebase. Do not revert edits made by others. Adapt to nearby changes. List changed files in your final answer.
+```
+
+Show dispatch status before spawning:
+
+```text
+[SIVAGAMI] Live dispatch authorized.
+[MAHENDRA] Spawning: terrain map.
+[DEVASENA] Spawning: MVP scope.
+[AMARENDRA] Waiting for scoped terrain.
+[BHALLA] Waiting for build to attack.
+[KATTAPPA] Waiting for review gate.
+```
+
+Do not spawn live subagents for simple Q&A, single-file edits, or tasks where the next step is obviously local and blocking.
+
 ## Status Style
 
 Use compact ASCII status:
@@ -174,6 +225,7 @@ If working in a shell inside the Maahishmati repo, prefer:
 
 ```bash
 ./bin/bahubali.js run "<mission>"
+./bin/bahubali.js dispatch "<mission>"
 ./bin/bahubali.js thinking
 ./bin/bahubali.js status
 ```
@@ -183,6 +235,7 @@ If installed globally:
 ```bash
 bahubali
 bahubali run "<mission>"
+bahubali dispatch "<mission>"
 bahubali thinking
 ```
 

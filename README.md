@@ -54,6 +54,7 @@ Homebrew is a good next distribution path. The first public version keeps instal
 ```bash
 node ./bin/bahubali.js
 node ./bin/bahubali.js run "build a calculator app"
+node ./bin/bahubali.js dispatch "build a calculator app"
 node ./bin/bahubali.js status
 node ./bin/bahubali.js thinking
 node ./bin/bahubali.js agents
@@ -121,3 +122,4 @@ Current Codex behavior:
 - Sivagami reports the battlefield before file edits.
 - Non-trivial missions show a compact army/thinking panel.
 - If Codex starts in the home directory, the skill avoids silently creating app scaffolds there.
+- Full-court/parallel/subagent prompts use live dispatch waves when Codex exposes subagent tools.
