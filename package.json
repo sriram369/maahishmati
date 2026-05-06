@@ -1,0 +1,43 @@
+{
+  "name": "maahishmati",
+  "version": "0.1.0",
+  "description": "Baahubali-inspired Codex war court for multi-agent product shipping.",
+  "type": "module",
+  "bin": {
+    "bahubali": "./bin/bahubali.js",
+    "maahishmati": "./bin/bahubali.js"
+  },
+  "scripts": {
+    "demo": "node ./bin/bahubali.js run \"build a calculator app\"",
+    "doctor": "node ./bin/bahubali.js doctor",
+    "status": "node ./bin/bahubali.js status",
+    "smoke": "node --check ./bin/bahubali.js && node ./bin/bahubali.js doctor"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "README.md",
+    "MAAHISHMATI.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sriram369/maahishmati.git"
+  },
+  "homepage": "https://github.com/sriram369/maahishmati#readme",
+  "bugs": {
+    "url": "https://github.com/sriram369/maahishmati/issues"
+  },
+  "keywords": [
+    "codex",
+    "multi-agent",
+    "workflow",
+    "terminal",
+    "cli",
+    "maahishmati",
+    "bahubali"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  }
+}

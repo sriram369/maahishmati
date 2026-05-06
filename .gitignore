@@ -1,0 +1,14 @@
+node_modules/
+npm-debug.log*
+
+# Local mission state and generated outputs.
+.maahishmati/latest.json
+.maahishmati/runs/
+
+# Local reference clones used during design research.
+references/
+
+# OS/editor noise.
+.DS_Store
+.idea/
+.vscode/

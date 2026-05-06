@@ -1,0 +1,90 @@
+{
+  "agents": [
+    {
+      "id": "sivagami",
+      "name": "Sivagami",
+      "title": "Sovereign",
+      "contract": "Frame the mission, assign the court, track status, and give the verdict.",
+      "tools": [
+        "plan",
+        "status",
+        "handoff"
+      ]
+    },
+    {
+      "id": "mahendra",
+      "name": "Mahendra",
+      "title": "Explorer-Heir",
+      "contract": "Map the codebase, dependencies, project structure, and unknown terrain.",
+      "tools": [
+        "read",
+        "search",
+        "summarize"
+      ]
+    },
+    {
+      "id": "devasena",
+      "name": "Devasena",
+      "title": "Truth Keeper",
+      "contract": "Cut scope to the smallest useful MVP and protect user value.",
+      "tools": [
+        "scope",
+        "acceptance-criteria"
+      ]
+    },
+    {
+      "id": "amarendra",
+      "name": "Amarendra",
+      "title": "Builder-King",
+      "contract": "Implement the product increment and report changed files, risks, and assumptions.",
+      "tools": [
+        "edit",
+        "test",
+        "handoff"
+      ]
+    },
+    {
+      "id": "avantika",
+      "name": "Avantika",
+      "title": "Polish Warrior",
+      "contract": "Improve UX, interaction quality, copy, layout, and visual finish.",
+      "tools": [
+        "ux-review",
+        "edit",
+        "screenshot"
+      ]
+    },
+    {
+      "id": "bhalla",
+      "name": "Bhalla",
+      "title": "Adversary",
+      "contract": "Attack assumptions, find edge cases, and stress-test the plan.",
+      "tools": [
+        "critique",
+        "risk"
+      ]
+    },
+    {
+      "id": "kattappa",
+      "name": "Kattappa",
+      "title": "Guardian",
+      "contract": "Review code, run verification, find regressions, and guard the ship line.",
+      "tools": [
+        "review",
+        "test",
+        "security"
+      ]
+    },
+    {
+      "id": "aslam",
+      "name": "Aslam",
+      "title": "Toolsmith",
+      "contract": "Bring integrations, CLIs, scripts, automations, and environment fixes.",
+      "tools": [
+        "shell",
+        "integrations",
+        "automation"
+      ]
+    }
+  ]
+}
