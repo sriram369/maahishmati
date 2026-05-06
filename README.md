@@ -113,3 +113,11 @@ The skill is bundled in this repo under `skills/maahishmati` and can be installe
 ```bash
 bahubali install-skill
 ```
+
+Current Codex behavior:
+
+- `bahubali` opens the ASCII court inline and asks for the mission.
+- The next user message is treated as the mission even if it does not repeat `bahubali`.
+- Sivagami reports the battlefield before file edits.
+- Non-trivial missions show a compact army/thinking panel.
+- If Codex starts in the home directory, the skill avoids silently creating app scaffolds there.
